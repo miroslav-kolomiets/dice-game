@@ -9,8 +9,6 @@ GAME RULES:
 
 */
 
-const RESET_VALUE = 1;
-
 let scores = [0, 0];
 let activePlayer = 0;
 let current = 0;
@@ -38,11 +36,11 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
   diceElement2.src = `dice-${dice2}.png`;
   diceElement2.style.display = 'block';
 
-  if (dice1 + dice2 !== RESET_VALUE) {
+  if (dice1 !== dice2 && dice1 !== 2 && dice2 !== 2) {
     current += (dice1 + dice2);
     document.getElementById('current-'+activePlayer).textContent = current;
 
-    if (scores[activePlayer] + current >= 20) {
+    if (scores[activePlayer] + current >= 100) {
       alert(`Player ${activePlayer} won!!!`);
     }
     
