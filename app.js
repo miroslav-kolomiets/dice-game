@@ -11,6 +11,7 @@ GAME RULES:
 
 let scores = [0, 0];
 let activePlayer = 0;
+let maxValue = 100;
 let current = 0;
 const diceElement1 = document.querySelector('#dice1');
 const diceElement2 = document.querySelector('#dice2');
@@ -40,8 +41,9 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     current += (dice1 + dice2);
     document.getElementById('current-'+activePlayer).textContent = current;
 
-    if (scores[activePlayer] + current >= 100) {
+    if (scores[activePlayer] + current >= maxValue) {
       alert(`Player ${activePlayer} won!!!`);
+      initGame();
     }
     
   } else {
@@ -65,6 +67,11 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
   changePlayer();
 });
 
+document.querySelector("#max-limit-form").addEventListener("submit", function(e){
+  e.preventDefault()
+  maxValue = document.querySelector('.field-limit').value;
+  console.log('maxValue' + maxValue)
+});
 
 document.querySelector('.btn-new').addEventListener('click', function() {
   initGame();

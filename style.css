@@ -136,6 +136,26 @@ i {
 .btn-new { top: 45px;}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
+.field-limit { top: 530px;}
+
+.field-limit {
+    position: absolute;
+    width: 200px;
+    height: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #555;
+    background: none;
+    border: 1px solid orange;
+    border-radius: 8px;
+    font-family: Lato;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 300;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+}
 
 #dice1 {
     position: absolute;
