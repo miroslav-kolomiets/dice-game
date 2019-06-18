@@ -16,11 +16,33 @@ let current = 0;
 const diceElement1 = document.querySelector('#dice1');
 const diceElement2 = document.querySelector('#dice2');
 
+const gamer = {
+  getScore: function(){
+    console.log('getScore')
+  },
+  setScore: function(){
+    console.log('setScore')
+  },
+  resetScore: function(){
+    console.log('resetScore')
+  }
+}
+
+function Player(name) {
+  this.name = name;
+  this.__proto__ = gamer;
+}
+
+const player1 = new Player(prompt('Введите имя первого игрока', 'Игрок 1'));
+const player2 = new Player(prompt('Введите имя второго игрока', 'Игрок 2'));
+
 const initGame = () => {
   document.querySelector('#current-0').textContent = 0;
   document.querySelector('#current-1').textContent = 0;
   document.querySelector('#score-0').textContent = 0;
   document.querySelector('#score-1').textContent = 0;
+  document.querySelector('#name-0').textContent = player1.name;
+  document.querySelector('#name-1').textContent = player2.name;
   diceElement1.style.display = 'none';
   diceElement2.style.display = 'none';
 }
