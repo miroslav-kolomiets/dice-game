@@ -17,19 +17,27 @@ const diceElement1 = document.querySelector('#dice1');
 const diceElement2 = document.querySelector('#dice2');
 
 const gamer = {
-  getScore: function(){
-    console.log('getScore')
+  getScore: function(name) {
+    var value = localStorage.getItem(name);
+    return value;
   },
-  setScore: function(){
-    console.log('setScore')
+  setScore: function(name, score) {
+    let personalScore = this.getScore(name);
+    let wins;
+
+    personalScore > 0 ? wins = +personalScore : wins = 0;
+    
+    localStorage.setItem(name, `${wins += 1}`)
   },
-  resetScore: function(){
-    console.log('resetScore')
+  resetScore: function(name) {
+    localStorage.removeItem(name);
   }
 }
 
 function Player(name) {
   this.name = name;
+  this.score = null;
+  this.isActive = null;
   this.__proto__ = gamer;
 }
 
@@ -49,7 +57,7 @@ const initGame = () => {
 
 initGame();
 
-document.querySelector('.btn-roll').addEventListener('click', function() {
+document.querySelector('.btn-roll').addEventListener('click', () => {
   let dice1 = Math.floor(Math.random() * 6) + 1;
   let dice2 = Math.floor(Math.random() * 6) + 1;
 
@@ -61,10 +69,13 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 
   if (dice1 !== dice2 && dice1 !== 2 && dice2 !== 2) {
     current += (dice1 + dice2);
-    document.getElementById('current-'+activePlayer).textContent = current;
+    document.getElementById(`current-${activePlayer}`).textContent = current;
 
     if (scores[activePlayer] + current >= maxValue) {
       alert(`Player ${activePlayer} won!!!`);
+    
+      player1.setScore(activePlayer.toString(), 1);
+
       initGame();
     }
     
@@ -83,18 +94,38 @@ const changePlayer = () => {
   document.querySelector(`.player-${activePlayer}-panel`).classList.toggle('active');
 }
 
-document.querySelector('.btn-hold').addEventListener('click', function() {
+document.querySelector('.btn-hold').addEventListener('click', () => {
   scores[activePlayer] += current;
   document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer];
   changePlayer();
-});
+})
 
-document.querySelector("#max-limit-form").addEventListener("submit", function(e){
+document.querySelector('.btn-result').addEventListener('click', () => {
+
+  document.querySelector(`.results-panel`).classList.toggle('vissible');
+
+  document.querySelector('.results-item').innerHTML = '';
+
+  let results = [];
+
+  for ( let i = 0, len = localStorage.length; i < len; ++i ) {
+    results.push(localStorage.getItem(localStorage.key(i)));
+  }
+
+  results.sort((a, b) => a - b);
+
+  results.reverse();
+
+  for ( let i = 0, len = results.length; i < len; ++i ) {
+    document.querySelector('.results-item').innerHTML += `<div id="result-${i}" class="game-results">Players win ${results[i]} time(s)!</div>`;
+  }
+})
+
+document.querySelector("#max-limit-form").addEventListener("submit", (e) => {
   e.preventDefault()
   maxValue = document.querySelector('.field-limit').value;
-  console.log('maxValue' + maxValue)
-});
+})
 
-document.querySelector('.btn-new').addEventListener('click', function() {
+document.querySelector('.btn-new').addEventListener('click', () => {
   initGame();
-});
+})

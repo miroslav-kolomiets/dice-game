@@ -22,6 +22,9 @@ body {
     position: relative;
     height: 100vh;
     color: #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .wrapper {
@@ -136,6 +139,7 @@ i {
 .btn-new { top: 45px;}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
+.btn-result { top: 90px;}
 .field-limit { top: 530px;}
 
 .field-limit {
@@ -160,7 +164,7 @@ i {
 #dice1 {
     position: absolute;
     left: 50%;
-    top: 120px;
+    top: 140px;
     transform: translateX(-50%);
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
@@ -169,7 +173,7 @@ i {
 #dice2 {
     position: absolute;
     left: 50%;
-    top: 250px;
+    top: 270px;
     transform: translateX(-50%);
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
@@ -177,3 +181,21 @@ i {
 
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
+
+.results-panel {
+    width: 500px;
+    height: 300px;
+    border: 1px solid orange;
+    border-radius: 4px;
+    background: white;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+
+.vissible {
+    display: flex;
+}
