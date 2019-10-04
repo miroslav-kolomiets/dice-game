@@ -8,38 +8,25 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+import showResults from './components/ShowResults'
+import Player from './components/Player'
+
+import dice_1 from './images/dice-1.png';
+import dice_2 from './images/dice-2.png';
+import dice_3 from './images/dice-3.png';
+import dice_4 from './images/dice-4.png';
+import dice_5 from './images/dice-5.png';
+import dice_6 from './images/dice-6.png';
+
+import './style.css';
+
+const diceElement1 = document.querySelector('#dice1');
+const diceElement2 = document.querySelector('#dice2');
 
 let scores = [0, 0];
 let activePlayer = 0;
 let maxValue = 100;
 let current = 0;
-const diceElement1 = document.querySelector('#dice1');
-const diceElement2 = document.querySelector('#dice2');
-
-const gamer = {
-  getScore: function(name) {
-    var value = localStorage.getItem(name);
-    return value;
-  },
-  setScore: function(name, score) {
-    let personalScore = this.getScore(name);
-    let wins;
-
-    personalScore > 0 ? wins = +personalScore : wins = 0;
-    
-    localStorage.setItem(name, `${wins += 1}`)
-  },
-  resetScore: function(name) {
-    localStorage.removeItem(name);
-  }
-}
-
-function Player(name) {
-  this.name = name;
-  this.score = null;
-  this.isActive = null;
-  this.__proto__ = gamer;
-}
 
 const player1 = new Player(prompt('Введите имя первого игрока', 'Игрок 1'));
 const player2 = new Player(prompt('Введите имя второго игрока', 'Игрок 2'));
@@ -100,32 +87,11 @@ document.querySelector('.btn-hold').addEventListener('click', () => {
   changePlayer();
 })
 
-document.querySelector('.btn-result').addEventListener('click', () => {
+document.querySelector('.btn-result').addEventListener('click', showResults)
 
-  document.querySelector(`.results-panel`).classList.toggle('vissible');
-
-  document.querySelector('.results-item').innerHTML = '';
-
-  let results = [];
-
-  for ( let i = 0, len = localStorage.length; i < len; ++i ) {
-    results.push(localStorage.getItem(localStorage.key(i)));
-  }
-
-  results.sort((a, b) => a - b);
-
-  results.reverse();
-
-  for ( let i = 0, len = results.length; i < len; ++i ) {
-    document.querySelector('.results-item').innerHTML += `<div id="result-${i}" class="game-results">Players win ${results[i]} time(s)!</div>`;
-  }
-})
-
-document.querySelector("#max-limit-form").addEventListener("submit", (e) => {
+document.querySelector("#max-limit-form").addEventListener("submit", e => {
   e.preventDefault()
   maxValue = document.querySelector('.field-limit').value;
 })
 
-document.querySelector('.btn-new').addEventListener('click', () => {
-  initGame();
-})
+document.querySelector('.btn-new').addEventListener('click', initGame)
